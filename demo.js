@@ -1,6 +1,6 @@
 let puppeteer = require('puppeteer');
 
-//This is an promised based function of puppeteer which will return promise, currenlty which is in pending stage when resolved returns browser instance
+//This is an promised based function of puppeteer which will return promise, currently which is in pending stage when resolved returns browser instance
 
 console.log( "Before");
 
