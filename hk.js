@@ -54,24 +54,28 @@ browserWillbeLauncedPromise.then(function(browserInstance){
 
     // let algoWillBeclickedPromise = page.click('.topic-card a[data-attr1="algorithms"]',{delay: 100});
 
-    let algoWillBeclickedPromise = waitAndClick('.topic-card a[data-attr1="algorithms"]', page ,{delay: 100});//Here waitandclick function will wait for new page to load (promise will not reslove until new page is loaded)
+    let algoWillBeclickedPromise = waitAndClick('.topic-card a[data-attr1="algorithms"]', page );//Here waitandclick function will wait for new page to load (promise will not reslove until new page is loaded)
+    return algoWillBeclickedPromise
 
-
-
-    return algoWillBeclickedPromise;
+}).then(function(){
+    console.log('Algo Section Clicked');
+    let getToWarmupPromise = waitAndClick('input[value="warmup"]', page);
+    return getToWarmupPromise;
+}).then(function(){
+    console.log("Redircting to warm-up");
 })
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
 
 
-function waitAndClick(selector ,cPage){
+function waitAndClick(selector ,cPage){//we are making this function
 
     return new Promise(function(resolve , reject ){
 
         let waitForModalPromise = cPage.waitForSelector(selector);
         waitForModalPromise.then(function(){
 
-            let clickModalPromise = cPage.click(selector , {delay : 100 })
+            let clickModalPromise = cPage.click(selector , {delay : 1000 })//In built function provided by puppeter
             return clickModalPromise; 
 
         }).then(function(){
