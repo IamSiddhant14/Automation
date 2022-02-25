@@ -63,6 +63,10 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     return getToWarmupPromise;
 }).then(function(){
     console.log("Redircting to warm-up");
+    let ChallengesArr = page.$$(".ui-btn.ui-btn-normal.primary-cta.ui-btn-line-primary.ui-btn-styled");//Query selector all
+    return ChallengesArr;
+}).then(function(questionsArr){
+  console.log("QuestionsArr is of Length -> " +questionsArr.length);
 })
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
@@ -88,20 +92,4 @@ function waitAndClick(selector ,cPage){//we are making this function
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-console.log("After");
+console.log("After")
