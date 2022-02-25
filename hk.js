@@ -52,7 +52,7 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     
 }).then(function(){
 
-    //Here the promise is been resolved but the loder is still working as because of which we are not been currently been diredted to a new page
+    //Here the promise is been resolved but the loder is still working as because of which we are not been currently been directed to a new page as of which the below commented code will not work
 
     // let algoWillBeclickedPromise = page.click('.topic-card a[data-attr1="algorithms"]',{delay: 100});
 
@@ -69,7 +69,7 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     return ChallengesArr;
 }).then(function(questionsArr){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
-
+  console.log(questionsArr[0]);
   let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
 })
 
@@ -80,7 +80,8 @@ function waitAndClick(selector ,cPage){//we are making this function
 
     return new Promise(function(resolve , reject ){
 
-        let waitForModalPromise = cPage.waitForSelector(selector);
+        let waitForModalPromise = cPage.waitForSelector(selector);//It will not resolve until it has found the given selector, and after that this function will return promise
+
         waitForModalPromise.then(function(){
 
             let clickModalPromise = cPage.click(selector , {delay : 100 })//In built function provided by puppeter

@@ -14,14 +14,15 @@ browserWillbeLauncedPromise.then(function( browserInstance ){ //When the promise
 
     // This will lauch chromium
 
-    // return browserInstance; Browser instance Or simply chrome
+    // return browserInstance; //Browser instance Or simply chrome
 
     // To open multiple tabs using automation in chromium
     
     let newTabPromise = browserInstance.newPage();//This will open a new tab/page
     return newTabPromise;
 
-}).then(function(newTab){
+})
+.then(function(newTab){
     
     console.log('New Tab Opened')
     let pageWillbeOpenedPromise = newTab.goto('https://www.pepcoding.com/');
