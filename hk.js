@@ -5,6 +5,8 @@ const loginLink = "https://www.hackerrank.com/auth/login";
 let email = 'kopiwe4461@ishop2k.com'
 let password = '1234578906@'
 
+const codeFile = require('./code');
+
 let page ;
 console.log( "Before");
 
@@ -67,6 +69,8 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     return ChallengesArr;
 }).then(function(questionsArr){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
+
+  let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
 })
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
@@ -79,7 +83,7 @@ function waitAndClick(selector ,cPage){//we are making this function
         let waitForModalPromise = cPage.waitForSelector(selector);
         waitForModalPromise.then(function(){
 
-            let clickModalPromise = cPage.click(selector , {delay : 1000 })//In built function provided by puppeter
+            let clickModalPromise = cPage.click(selector , {delay : 100 })//In built function provided by puppeter
             return clickModalPromise; 
 
         }).then(function(){
@@ -90,6 +94,17 @@ function waitAndClick(selector ,cPage){//we are making this function
 
     })
 }
+
+function questionSolver( page , question , answer ){
+    return new Promise(function(resolve , reject){
+        let questionWillBeSolvedPromise = question.click();
+        questionWillBeSolvedPromise.then(function(){
+            console.log('Question Clicked'); 
+        })
+    })
+}
+
+
 
 
 console.log("After")
