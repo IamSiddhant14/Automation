@@ -74,7 +74,8 @@ browserWillbeLauncedPromise.then(function(browserInstance){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
 //   console.log(questionsArr[0]);
   let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
-}).then()
+})
+// .then()
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
 
@@ -131,7 +132,7 @@ function questionSolver( page , question , answer ){
         let questionWillBeSolvedPromise = question.click();
         questionWillBeSolvedPromise.then(function(){
             console.log('Question Clicked'); 
-            resolve();
+            // resolve();
             
         })
     })
