@@ -29,7 +29,12 @@ browserWillbeLauncedPromise.then(function( browserInstance ){ //When the promise
     return pageWillbeOpenedPromise
 
 }).then( function(webPage){
-    console.log('Website opened');
+    console.log('Website opened' + webPage );
+    
+})
+
+.catch(function(){
+    console.log('Hello');
 })
 
 console.log("After");

@@ -1,3 +1,7 @@
+//npm init -- To initiate a node project
+//npm install puppeteer / npm i puppeteer 
+
+//Automation avoid manuale intervation and is also helpfull in testing an application
 let puppeteer = require('puppeteer');
 
 const loginLink = "https://www.hackerrank.com/auth/login";
@@ -9,7 +13,6 @@ const codeFile = require('./code');
 
 let page ;
 console.log( "Before");
-
 
 //This is an promised based function of puppeteer which will return promise, currently it is in pending stage when resolved returns browser instance
 
@@ -69,9 +72,9 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     return ChallengesArr;
 }).then(function(questionsArr){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
-  console.log(questionsArr[0]);
+//   console.log(questionsArr[0]);
   let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
-})
+}).then()
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
 
@@ -89,20 +92,50 @@ function waitAndClick(selector ,cPage){//we are making this function
 
         }).then(function(){
             resolve();
+
         }).catch(function(){
             reject();
+
         })
 
     })
+
+     
+
+    
+    //The below commented code will also work fine
+
+    // let promise = new Promise(function(resolve , reject ){
+
+    //     let waitForModalPromise = cPage.waitForSelector(selector);//It will not resolve until it has found the given selector, and after that this function will return promise
+
+    //     waitForModalPromise.then(function(){
+
+    //         let clickModalPromise = cPage.click(selector , {delay : 100 })//In built function provided by puppeter
+    //         return clickModalPromise; 
+
+    //     }).then(function(){
+    //         resolve();
+    //     }).catch(function(){
+    //         reject();
+    //     })
+
+    // })
+
+    // return promise;
 }
 
 function questionSolver( page , question , answer ){
+
     return new Promise(function(resolve , reject){
         let questionWillBeSolvedPromise = question.click();
         questionWillBeSolvedPromise.then(function(){
             console.log('Question Clicked'); 
+            resolve();
+            
         })
     })
+
 }
 
 
