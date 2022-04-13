@@ -33,7 +33,7 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     page = newTab;
     let pageWillbeOpenedPromise =  newTab.goto(loginLink);//open this link in the newly opened tab
 
-    return pageWillbeOpenedPromise
+    return pageWillbeOpenedPromise;
 
 }).then(function(){//Since here we dont need it further therefore we will not be taking in the resolve parameters
 
@@ -63,19 +63,30 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     return algoWillBeclickedPromise
 
 }).then(function(){
+
     console.log('Algo Section Clicked');
     let getToWarmupPromise = waitAndClick('input[value="warmup"]', page);
     return getToWarmupPromise;
+
 }).then(function(){
+
     console.log("Redircting to warm-up");
     let ChallengesArr = page.$$(".ui-btn.ui-btn-normal.primary-cta.ui-btn-line-primary.ui-btn-styled");//Query selector all
     return ChallengesArr;
+    
 }).then(function(questionsArr){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
 //   console.log(questionsArr[0]);
-  let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
+
+let questionWillBeSolvedPromise = questionSolver(page , questionsArr[0],codeFile.answers[0]);
+
+// for( let i =0; i<questionsArr.length ; i++){
+//     let questionWillBeSolvedPromise = questionSolver(page , questionsArr[i],codeFile.answers[i]);
+// }
+
+
+
 })
-// .then()
 
 //This is not by default a promise driven(returning) function as the other method present above, in order to return a promise by this function we will have to use a syantx like this, promise driven function return resolve or reject which is later been handled by "then" or "catch" keywords
 
@@ -129,17 +140,95 @@ function waitAndClick(selector ,cPage){//we are making this function
 function questionSolver( page , question , answer ){
 
     return new Promise(function(resolve , reject){
+        
         let questionWillBeSolvedPromise = question.click();
         questionWillBeSolvedPromise.then(function(){
+
+
+            let waitForEditorPromise = waitAndClick('.monaco-editor.no-user-select.vs' , page );
+            return waitForEditorPromise;
+
+        }).then(function(){
+
+
             console.log('Question Clicked'); 
-            // resolve();
+            return waitAndClick(' .checkbox-input' , page)
+
             
         })
+        .then(function(){
+
+            return page.waitForSelector('.text-area.custominput')
+
+        })
+        .then(function(){
+
+            console.log("Custom text area selected")
+            return page.type('.text-area.custominput', answer , {delay:2});
+
+
+        }).then(function(){
+
+            console.log('Answer typed')
+            let ctrlonHoldPromise = page.keyboard.down('Control');
+            return ctrlonHoldPromise
+
+        }).then(function(){
+
+            let AisPressedPromise = page.keyboard.press('A', {delay : 10});
+            return AisPressedPromise ;
+
+        }).then(function(){
+            console.log('Select all is implemented');
+            let XisPressedPromise = page.keyboard.press('X', {delay : 10});
+            return XisPressedPromise ;
+
+        }).then(function(){
+            console.log('cut implemented');
+            let ctrlIsRealeasedPromise = page.keyboard.up('Control');
+            return ctrlIsRealeasedPromise ;
+          
+        }).then(function(){
+
+            console.log('ctrl is Released');
+            let waitForEditorPromise = waitAndClick('.monaco-editor.no-user-select.vs' , page );
+            return waitForEditorPromise;
+
+        }).then(function(){
+
+            console.log('Answer typed')
+            let ctrlonHoldPromise = page.keyboard.down('Control');
+            return ctrlonHoldPromise
+
+        }).then(function(){
+
+            let AisPressedPromise = page.keyboard.press('A', {delay : 10});
+            return AisPressedPromise ;
+
+        }).then(function(){
+
+            console.log('Paste is implemented');
+            let XisPressedPromise = page.keyboard.press('V', {delay : 10});
+            return XisPressedPromise ;
+
+        }).then(function(){
+
+            console.log('Done');
+            let ctrlIsRealeasedPromise = page.keyboard.up('Control');
+            return ctrlIsRealeasedPromise ;
+          
+        }).then(function(){
+
+            return page.click('.hr-monaco__run-code', {delay : 20})
+
+        }).then(function(){
+            resolve();
+        }).catch(function(){
+            reject();
+        })
+
     })
 
 }
 
-
-
-
-console.log("After")
+console.log("After"); 
