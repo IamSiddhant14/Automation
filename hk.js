@@ -73,7 +73,7 @@ browserWillbeLauncedPromise.then(function(browserInstance){
     console.log("Redircting to warm-up");
     let ChallengesArr = page.$$(".ui-btn.ui-btn-normal.primary-cta.ui-btn-line-primary.ui-btn-styled");//Query selector all
     return ChallengesArr;
-    
+
 }).then(function(questionsArr){
   console.log("QuestionsArr is of Length -> " +questionsArr.length);
 //   console.log(questionsArr[0]);
